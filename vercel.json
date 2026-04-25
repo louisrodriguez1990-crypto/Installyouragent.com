@@ -1,11 +1,8 @@
 {
   "version": 2,
   "framework": null,
-  "outputDirectory": ".",
-  "buildCommand": null,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ],
+  "outputDirectory": "dist",
+  "buildCommand": "npm run build",
   "headers": [
     {
       "source": "/(.*)",

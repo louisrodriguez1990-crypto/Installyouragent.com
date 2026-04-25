@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -195,41 +195,6 @@
   .term .dim{ color:#6b6b6b }
   .caret::after{ content:"▍"; color:var(--accent); margin-left:2px; animation:blink 1s steps(1) infinite }
   @keyframes blink{ 50%{ opacity:0 } }
-
-  /* Tweaks panel (host-protocol compliant, hand-rolled) */
-  #tweaks{
-    position:fixed; right:16px; bottom:16px; z-index:60;
-    width:288px; max-width:calc(100vw - 32px);
-    background:#0a0a0a; color:#ededed;
-    border:1px solid #262626;
-    font-family:'JetBrains Mono', monospace; font-size:12px;
-    display:none;
-  }
-  #tweaks[data-open="true"]{ display:block }
-  #tweaks header{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:.65rem .85rem; border-bottom:1px solid #1c1c1c;
-    text-transform:uppercase; letter-spacing:.16em; font-size:10.5px; color:#9a9a9a;
-  }
-  #tweaks .group{ padding:.85rem; border-bottom:1px solid #1c1c1c }
-  #tweaks .group:last-child{ border-bottom:0 }
-  #tweaks label{ display:block; color:#6b6b6b; margin-bottom:.5rem; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase }
-  #tweaks .swatches{ display:flex; gap:.45rem }
-  .sw{
-    width:30px;height:30px;border:1px solid #262626;cursor:pointer;
-    display:grid;place-items:center;color:transparent;
-  }
-  .sw[aria-pressed="true"]{ border-color:#ededed }
-  .sw[aria-pressed="true"]::after{ content:"●"; color:#0a0a0a; font-size:14px; line-height:1 }
-  #tweaks .seg{ display:flex; border:1px solid #262626 }
-  #tweaks .seg button{ flex:1; padding:.5rem; color:#9a9a9a; background:transparent; border:0; cursor:pointer; font:inherit; text-transform:uppercase; letter-spacing:.12em; font-size:10.5px }
-  #tweaks .seg button[aria-pressed="true"]{ background:#ededed; color:#0a0a0a }
-  #tweaks .close{
-    background:transparent;border:1px solid #262626;color:#9a9a9a;cursor:pointer;
-    width:22px;height:22px;display:grid;place-items:center;font:inherit;
-  }
-  #tweaks .close:hover{ color:#ededed; border-color:#3a3a3a }
-
   /* Mobile spacing tighten */
   @media (max-width: 640px){
     .row{ grid-template-columns: 36px 1fr; }
@@ -296,9 +261,9 @@
             Book a 15-min intake
             <span aria-hidden="true">→</span>
           </a>
-          <a href="#demo" data-loom class="btn btn-ghost">
-            <span aria-hidden="true">▶</span>
-            Watch the 3-min demo
+          <a href="/seo/" class="btn btn-ghost">
+            Agent install guides
+            <span aria-hidden="true">→</span>
           </a>
         </div>
 
@@ -470,7 +435,7 @@
           <li>Cloud LLM routing</li>
           <li>2 weeks of tweaks</li>
         </ul>
-        <a href="#book" data-stripe="starter" class="btn btn-ghost mt-auto">Book this <span aria-hidden="true">→</span></a>
+        <a href="#book" class="btn btn-ghost mt-auto">Book intake <span aria-hidden="true">→</span></a>
       </div>
 
       <!-- Pro (featured) -->
@@ -490,7 +455,7 @@
           <li>Dedicated VPS provisioning</li>
           <li>30-min handoff Loom</li>
         </ul>
-        <a href="#book" data-stripe="pro" class="btn btn-primary mt-auto">Book this <span aria-hidden="true">→</span></a>
+        <a href="#book" class="btn btn-primary mt-auto">Book intake <span aria-hidden="true">→</span></a>
       </div>
 
       <!-- Operator -->
@@ -510,12 +475,12 @@
           <li>Ongoing skill development</li>
           <li>Cancel any month</li>
         </ul>
-        <a href="#book" data-stripe="operator" class="btn btn-ghost mt-auto">Book this <span aria-hidden="true">→</span></a>
+        <a href="#book" class="btn btn-ghost mt-auto">Book intake <span aria-hidden="true">→</span></a>
       </div>
     </div>
 
     <p class="mt-6 font-mono text-xs text-mute">
-      // Stripe payment links open after the intake call. No card on file before then.
+      We quote after the intake, once the workflow, channels, and access model are clear.
     </p>
   </div>
 </section>
@@ -589,11 +554,9 @@
       <a href="mailto:hi@installyouragent.com" class="btn btn-ghost">hi@installyouragent.com</a>
     </div>
 
-    <!-- Intake form — submissions go to Formspree -->
-    <!-- Sign up at formspree.io, create a form, and replace YOUR_FORM_ID below -->
     <div id="intake-form" class="mt-14 border hairline-strong">
       <div class="flex items-center justify-between px-4 py-3 border-b hairline font-mono text-xs text-mute2">
-        <span>// intake · 2 min</span>
+        <span>intake · 2 min</span>
         <span>→ hi@installyouragent.com</span>
       </div>
       <div class="px-6 py-8 sm:px-10 sm:py-10 max-w-[640px]">
@@ -644,154 +607,21 @@
       </div>
     </div>
 
-    <!-- Loom placeholder -->
-    <div id="demo" class="mt-6 border hairline-strong">
-      <div class="flex items-center justify-between px-4 py-3 border-b hairline font-mono text-xs text-mute2">
-        <span>// loom.com/share/&lt;3-min-demo&gt;</span>
-        <span>placeholder</span>
-      </div>
-      <div class="aspect-video grid place-items-center text-center px-6">
-        <div>
-          <div class="font-mono text-xs text-mute2 mb-3">LOOM EMBED</div>
-          <div class="display-md text-2xl sm:text-3xl">▶ The 3-min demo</div>
-          <a href="#" data-loom class="btn btn-ghost mt-6">Play <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-    </div>
-
     <!-- Footer line -->
     <div class="mt-16 pt-8 border-t hairline flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-mute2">
       <div class="flex items-center gap-3">
         <span class="dot" aria-hidden="true"></span>
         <span>installyouragent.com</span>
       </div>
-      <div>© <span id="year"></span> · built by an operator, for operators</div>
+      <div class="flex flex-wrap gap-3">
+        <a href="/seo/" class="hover:text-paper">agent install guides</a>
+        <span>/</span>
+        <span>&copy; <span id="year"></span> built by an operator, for operators</span>
+      </div>
     </div>
   </div>
 </section>
-
-<!-- ─────────────── TWEAKS ─────────────── -->
-<aside id="tweaks" aria-label="Tweaks panel">
-  <header>
-    <span>// Tweaks</span>
-    <button class="close" id="twkClose" aria-label="Close tweaks">×</button>
-  </header>
-  <div class="group">
-    <label>Accent</label>
-    <div class="swatches" role="radiogroup" aria-label="Accent color">
-      <button class="sw" data-accent="green"  style="background:#6dff7a" title="Electric green"></button>
-      <button class="sw" data-accent="cyan"   style="background:#5ee7ff" title="Cyan"></button>
-      <button class="sw" data-accent="amber"  style="background:#ffb547" title="Amber"></button>
-      <button class="sw" data-accent="paper"  style="background:#ededed" title="Paper (no accent)"></button>
-    </div>
-  </div>
-  <div class="group">
-    <label>Density</label>
-    <div class="seg" role="radiogroup" aria-label="Density">
-      <button data-density="compact">Compact</button>
-      <button data-density="regular">Regular</button>
-      <button data-density="comfy">Comfy</button>
-    </div>
-  </div>
-  <div class="group">
-    <label>Hero headline</label>
-    <div class="seg" role="radiogroup" aria-label="Hero variant">
-      <button data-hero="default">Default</button>
-      <button data-hero="alt">Alt</button>
-    </div>
-  </div>
-</aside>
-
 <script>
-  // ───── Defaults (host-rewritable JSON between markers) ─────
-  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-    "accent": "green",
-    "density": "regular",
-    "hero": "default",
-    "installCount": 42
-  }/*EDITMODE-END*/;
-
-  // ───── Apply ─────
-  const ACCENTS = {
-    green: { c: '#6dff7a', ink: '#06170a' },
-    cyan:  { c: '#5ee7ff', ink: '#04181c' },
-    amber: { c: '#ffb547', ink: '#1a1003' },
-    paper: { c: '#ededed', ink: '#0a0a0a' },
-  };
-  const HEROS = {
-    default: {
-      h: 'We install your <span class="accent">AI&nbsp;agent</span>.<br/>You run a team<br/>from your phone.',
-      s: 'OpenClaw, local LLMs, custom swarms. Done in a weekend. Yours forever.',
-    },
-    alt: {
-      h: 'You message it.<br/>It does the&nbsp;<span class="accent">work</span>.',
-      s: 'A personal agent, installed at your door by our team. Local. Private. Switched on by Sunday.',
-    },
-  };
-
-  const state = { ...TWEAK_DEFAULTS };
-
-  function applyState(){
-    // accent
-    const a = ACCENTS[state.accent] || ACCENTS.green;
-    document.documentElement.style.setProperty('--accent', a.c);
-    document.documentElement.style.setProperty('--accent-ink', a.ink);
-    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0a0a0a');
-    document.querySelectorAll('#tweaks .sw').forEach(b => b.setAttribute('aria-pressed', b.dataset.accent === state.accent));
-
-    // density
-    document.body.dataset.density = state.density;
-    document.querySelectorAll('#tweaks .seg button[data-density]').forEach(b => b.setAttribute('aria-pressed', b.dataset.density === state.density));
-
-    // hero variant
-    const hero = HEROS[state.hero] || HEROS.default;
-    const h1 = document.querySelector('h1.display');
-    const sub = document.getElementById('subhead');
-    if (h1) h1.innerHTML = hero.h;
-    if (sub) sub.textContent = hero.s;
-    document.querySelectorAll('#tweaks .seg button[data-hero]').forEach(b => b.setAttribute('aria-pressed', b.dataset.hero === state.hero));
-
-    // misc
-    const ic = document.getElementById('installCount');
-    if (ic) ic.textContent = state.installCount;
-  }
-
-  function setKey(k, v){
-    state[k] = v;
-    applyState();
-    try {
-      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v }}, '*');
-    } catch(e){}
-  }
-
-  // ───── Wire controls ─────
-  document.querySelectorAll('#tweaks .sw').forEach(b => {
-    b.addEventListener('click', () => setKey('accent', b.dataset.accent));
-  });
-  document.querySelectorAll('#tweaks .seg button[data-density]').forEach(b => {
-    b.addEventListener('click', () => setKey('density', b.dataset.density));
-  });
-  document.querySelectorAll('#tweaks .seg button[data-hero]').forEach(b => {
-    b.addEventListener('click', () => setKey('hero', b.dataset.hero));
-  });
-
-  // ───── Edit-mode protocol (LISTENER FIRST, then announce) ─────
-  const panel = document.getElementById('tweaks');
-  const closeBtn = document.getElementById('twkClose');
-  function openPanel(){ panel.dataset.open = 'true' }
-  function closePanel(){
-    panel.dataset.open = 'false';
-    try { window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); } catch(e){}
-  }
-  window.addEventListener('message', (e) => {
-    const t = e.data && e.data.type;
-    if (t === '__activate_edit_mode')   openPanel();
-    if (t === '__deactivate_edit_mode') closePanel();
-  });
-  closeBtn.addEventListener('click', closePanel);
-  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e){}
-
-  // ───── FAQ accordion: only one open at a time ─────
   document.querySelectorAll('details.faq').forEach(d => {
     d.addEventListener('toggle', () => {
       if (d.open) {
@@ -800,10 +630,9 @@
     });
   });
 
-  // ───── Year ─────
-  document.getElementById('year').textContent = new Date().getFullYear();
+  const year = document.getElementById('year');
+  if (year) year.textContent = new Date().getFullYear();
 
-  // ───── Smooth scroll for #book ─────
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href');
@@ -814,7 +643,6 @@
     });
   });
 
-  // ───── Intake form: show success state on Formspree redirect ─────
   const intakeForm = document.getElementById('intake');
   if (intakeForm) {
     intakeForm.addEventListener('submit', async (e) => {
@@ -836,9 +664,8 @@
       }
     });
   }
-
-  // ───── Init ─────
-  applyState();
 </script>
 </body>
 </html>
+
+
