@@ -1,0 +1,65 @@
+Build a single-page landing site for "Install Your Agent" — a service that installs personal AI agents (OpenClaw, local LLMs, custom swarms) for clients who want the capability without the technical setup.
+
+BRAND
+- Name: Install Your Agent
+- Domain: installyouragent.com
+- Vibe: Operator energy. Technical but not nerdy. Confident, fast, premium-but-accessible. Think: a high-end installer, not a SaaS startup. Less "AI revolution," more "I show up, it works, you're done."
+- Aesthetic: Dark mode default. Mono or near-mono palette with one sharp accent (electric green, cyan, or amber — pick what feels most "terminal/operator"). Sharp edges, generous whitespace, large confident type. No gradients, no glassmorphism, no stock AI brain illustrations.
+
+STRUCTURE (single scroll, no nav)
+
+1. HERO
+   - Headline: "I install your AI agent. You run a team from your phone."
+   - Subhead: One line — "OpenClaw, local LLMs, custom swarms. Done in a weekend. Yours forever."
+   - Primary CTA button: "Book a 15-min intake" (Calendly placeholder link)
+   - Secondary: "Watch the 3-min demo" (Loom placeholder)
+   - Small trust line below: "Flat fee. No subscriptions. No vendor lock-in."
+
+2. THE PROBLEM (one tight section)
+   - Three short lines, large type:
+     "AI agents can run your business."
+     "Setting one up takes a weekend you don't have."
+     "I do it for you."
+
+3. WHAT YOU GET
+   - 4-6 items, icon + one-line each:
+     • OpenClaw installed on your machine or VPS
+     • Connected to Telegram, WhatsApp, or your channel of choice
+     • Local LLM configured (no more API bills) OR cloud-routed via OpenRouter
+     • 5-10 custom skills tuned to your business
+     • 30-min walkthrough Loom
+     • 2 weeks of tweaks included
+
+4. PRICING
+   - 3 tiers, simple cards:
+     • Starter — $1,500 — single machine, standard skills, Telegram
+     • Pro — $3,000 — custom skills, local LLM, multi-channel
+     • Operator — $5,000+ — multi-device, custom swarm, ongoing retainer
+   - Each card has a "Book this" button
+
+5. WHY ME (short, no fluff)
+   - 3 lines max. Something like:
+     "I've installed [N] agents. I use mine daily. I'll send you mine on the call."
+
+6. FAQ (5 questions, accordion)
+   - What's an AI agent? / Why not just use ChatGPT? / Is this secure? / What hardware do I need? / What if it breaks?
+
+7. FOOTER CTA
+   - Big, simple: "Ready? Book the call."
+   - Calendly button
+   - Email link
+
+TECHNICAL
+- Single HTML file, inline Tailwind (CDN ok)
+- Mobile-first, looks sharp on iPhone
+- One Loom embed placeholder, one Calendly embed placeholder, one Stripe payment link placeholder
+- No animations beyond subtle hover states
+- Total page should feel like it loads instantly and reads in 30 seconds
+
+TONE RULES
+- No "revolutionize," "unlock," "harness," "empower," or any AI-marketing cliché
+- No emojis except maybe one in the hero
+- Sentences short. Verbs strong. Confidence without hype.
+- Read it out loud — if it sounds like a SaaS landing page, rewrite it.
+
+Output: one .html file, ready to deploy.

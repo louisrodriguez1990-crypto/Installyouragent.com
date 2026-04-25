@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Install Your Agent — We install your AI agent. You run a team from your phone.</title>
+<meta name="description" content="OpenClaw, local LLMs, custom swarms. Done in a weekend. Yours forever. Flat fee. No subscriptions. No vendor lock-in." />
+<meta name="theme-color" content="#0a0a0a" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:    '#0a0a0a',
+          ink2:   '#111111',
+          line:   '#1c1c1c',
+          line2: '#262626',
+          mute:   '#6b6b6b',
+          mute2: '#9a9a9a',
+          paper:  '#ededed',
+        },
+        fontFamily: {
+          sans: ['"Inter Tight"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        },
+        letterSpacing: {
+          tightest: '-0.04em',
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --accent: #6dff7a;            /* electric green default */
+    --accent-ink: #06170a;        /* dark text on accent */
+    --pad-y: clamp(96px, 12vh, 160px);
+  }
+  html,body{background:#0a0a0a;color:#ededed}
+  body{
+    font-family:'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings:"ss01","cv11";
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .font-mono, code, kbd{ font-family:'JetBrains Mono', ui-monospace, monospace; font-feature-settings:"zero","ss01" }
+
+  .accent{ color:var(--accent) }
+  .bg-accent{ background:var(--accent); color:var(--accent-ink) }
+  .border-accent{ border-color:var(--accent) }
+  .ring-accent:focus-visible{ outline:2px solid var(--accent); outline-offset:3px }
+  ::selection{ background:var(--accent); color:var(--accent-ink) }
+
+  /* Density */
+  body[data-density="compact"]  { --pad-y: clamp(64px, 8vh, 112px) }
+  body[data-density="comfy"]    { --pad-y: clamp(120px, 16vh, 200px) }
+
+  .section-pad{ padding-top:var(--pad-y); padding-bottom:var(--pad-y) }
+
+  /* Hairline grid */
+  .hairline{ border-color:#1c1c1c }
+  .hairline-strong{ border-color:#262626 }
+
+  /* Headline kerning */
+  .display{
+    font-weight:700;
+    letter-spacing:-0.045em;
+    line-height:0.95;
+    text-wrap:balance;
+  }
+  .display-md{
+    font-weight:700;
+    letter-spacing:-0.035em;
+    line-height:1;
+    text-wrap:balance;
+  }
+
+  /* Buttons */
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;
+    padding:.95rem 1.25rem;font-weight:600;font-size:.95rem;
+    border:1px solid transparent; transition:transform .12s ease, background .15s ease, border-color .15s ease, color .15s ease;
+    will-change:transform;
+  }
+  .btn:hover{ transform:translateY(-1px) }
+  .btn:active{ transform:translateY(0) }
+  .btn-primary{ background:var(--accent); color:var(--accent-ink); }
+  .btn-primary:hover{ filter:brightness(1.06) }
+  .btn-ghost{ color:#ededed; border-color:#262626; background:transparent }
+  .btn-ghost:hover{ border-color:#3a3a3a; background:#111 }
+
+  /* Marquee tape */
+  .tape{
+    background:#000;
+    border-top:1px solid #1c1c1c;
+    border-bottom:1px solid #1c1c1c;
+    overflow:hidden;
+  }
+  .tape-track{
+    display:flex; gap:3rem; white-space:nowrap;
+    animation: tape 38s linear infinite;
+    will-change:transform;
+  }
+  @keyframes tape{ from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
+  @media (prefers-reduced-motion: reduce){
+    .tape-track{ animation:none }
+  }
+
+  /* Section number eyebrow */
+  .eyebrow{
+    font-family:'JetBrains Mono', ui-monospace, monospace;
+    font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:#9a9a9a;
+  }
+
+  /* What-you-get list rows */
+  .row{
+    display:grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items:center;
+    gap:1.25rem;
+    padding:1.4rem 0;
+    border-top:1px solid #1c1c1c;
+  }
+  .row:last-child{ border-bottom:1px solid #1c1c1c }
+  .row .num{ color:#6b6b6b; font-family:'JetBrains Mono', monospace; font-size:12px }
+  .row .ico{ color:var(--accent); font-family:'JetBrains Mono', monospace; font-size:14px; text-align:right }
+
+  /* Pricing card */
+  .price-card{
+    border:1px solid #1c1c1c;
+    background:#0d0d0d;
+    padding:2rem 1.75rem;
+    display:flex; flex-direction:column; gap:1.25rem;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .price-card:hover{ border-color:#3a3a3a }
+  .price-card.featured{ border-color:var(--accent); background:#0a0f0b }
+  .price-card .tier{ font-family:'JetBrains Mono', monospace; font-size:12px; color:#9a9a9a; letter-spacing:.14em; text-transform:uppercase }
+  .price-card .price{ font-size:clamp(2.2rem,4.5vw,3rem); font-weight:700; letter-spacing:-0.04em; line-height:1 }
+  .price-card ul{ display:flex; flex-direction:column; gap:.55rem; color:#cfcfcf; font-size:.95rem }
+  .price-card ul li{ display:flex; gap:.6rem; align-items:flex-start }
+  .price-card ul li::before{ content:"+"; color:var(--accent); font-family:'JetBrains Mono', monospace; flex:none; line-height:1.5 }
+
+  /* FAQ */
+  details.faq{ border-top:1px solid #1c1c1c; padding:1.25rem 0 }
+  details.faq:last-of-type{ border-bottom:1px solid #1c1c1c }
+  details.faq > summary{
+    list-style:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    font-size:clamp(1.05rem, 2.2vw, 1.35rem);
+    font-weight:600; letter-spacing:-0.02em;
+  }
+  details.faq > summary::-webkit-details-marker{ display:none }
+  details.faq > summary .plus{
+    width:28px;height:28px;display:grid;place-items:center;
+    border:1px solid #262626; flex:none;
+    font-family:'JetBrains Mono', monospace; font-size:14px; color:#9a9a9a;
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  details.faq[open] > summary .plus{ color:var(--accent); border-color:var(--accent); transform:rotate(45deg) }
+  details.faq .answer{ padding-top:.9rem; color:#b8b8b8; max-width:62ch; line-height:1.6 }
+
+  /* Status dot */
+  .dot{
+    display:inline-block; width:8px; height:8px; background:var(--accent); border-radius:999px;
+    box-shadow:0 0 0 4px rgba(109,255,122,.12);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ box-shadow:0 0 0 4px rgba(109,255,122,.10) }
+    50%   { box-shadow:0 0 0 7px rgba(109,255,122,.04) }
+  }
+
+  /* Hero terminal */
+  .term{
+    border:1px solid #1c1c1c; background:#0d0d0d;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; line-height:1.7; color:#cfcfcf;
+  }
+  .term .bar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.55rem .85rem;
+    border-bottom:1px solid #1c1c1c; color:#6b6b6b; font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  }
+  .term .body{ padding:1rem 1.1rem }
+  .term .ok{ color:var(--accent) }
+  .term .dim{ color:#6b6b6b }
+  .caret::after{ content:"▍"; color:var(--accent); margin-left:2px; animation:blink 1s steps(1) infinite }
+  @keyframes blink{ 50%{ opacity:0 } }
+
+  /* Tweaks panel (host-protocol compliant, hand-rolled) */
+  #tweaks{
+    position:fixed; right:16px; bottom:16px; z-index:60;
+    width:288px; max-width:calc(100vw - 32px);
+    background:#0a0a0a; color:#ededed;
+    border:1px solid #262626;
+    font-family:'JetBrains Mono', monospace; font-size:12px;
+    display:none;
+  }
+  #tweaks[data-open="true"]{ display:block }
+  #tweaks header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.65rem .85rem; border-bottom:1px solid #1c1c1c;
+    text-transform:uppercase; letter-spacing:.16em; font-size:10.5px; color:#9a9a9a;
+  }
+  #tweaks .group{ padding:.85rem; border-bottom:1px solid #1c1c1c }
+  #tweaks .group:last-child{ border-bottom:0 }
+  #tweaks label{ display:block; color:#6b6b6b; margin-bottom:.5rem; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase }
+  #tweaks .swatches{ display:flex; gap:.45rem }
+  .sw{
+    width:30px;height:30px;border:1px solid #262626;cursor:pointer;
+    display:grid;place-items:center;color:transparent;
+  }
+  .sw[aria-pressed="true"]{ border-color:#ededed }
+  .sw[aria-pressed="true"]::after{ content:"●"; color:#0a0a0a; font-size:14px; line-height:1 }
+  #tweaks .seg{ display:flex; border:1px solid #262626 }
+  #tweaks .seg button{ flex:1; padding:.5rem; color:#9a9a9a; background:transparent; border:0; cursor:pointer; font:inherit; text-transform:uppercase; letter-spacing:.12em; font-size:10.5px }
+  #tweaks .seg button[aria-pressed="true"]{ background:#ededed; color:#0a0a0a }
+  #tweaks .close{
+    background:transparent;border:1px solid #262626;color:#9a9a9a;cursor:pointer;
+    width:22px;height:22px;display:grid;place-items:center;font:inherit;
+  }
+  #tweaks .close:hover{ color:#ededed; border-color:#3a3a3a }
+
+  /* Mobile spacing tighten */
+  @media (max-width: 640px){
+    .row{ grid-template-columns: 36px 1fr; }
+    .row .ico{ display:none }
+  }
+
+  /* Intake form */
+  .field{
+    display:flex; flex-direction:column; gap:.45rem;
+  }
+  .field label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#9a9a9a;
+  }
+  .field input, .field select, .field textarea{
+    background:#0d0d0d; color:#ededed;
+    border:1px solid #262626;
+    padding:.8rem 1rem;
+    font-family:'Inter Tight', ui-sans-serif, sans-serif; font-size:.95rem;
+    outline:none; width:100%;
+    transition:border-color .15s ease;
+    -webkit-appearance:none; appearance:none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    border-color:var(--accent);
+  }
+  .field select{ cursor:pointer; background-image:none }
+  .field textarea{ resize:vertical; min-height:120px; line-height:1.6 }
+  #form-success{
+    border:1px solid var(--accent); padding:2rem 1.75rem;
+    font-family:'JetBrains Mono', monospace; color:var(--accent);
+    font-size:.9rem; letter-spacing:.04em; display:none;
+  }
+</style>
+</head>
+<body data-density="regular" class="min-h-screen">
+
+<!-- ─────────────── HERO ─────────────── -->
+<section class="section-pad">
+  <div class="max-w-[1200px] mx-auto px-6 sm:px-8">
+    <!-- Top meta line -->
+    <div class="flex items-center justify-between text-xs sm:text-sm font-mono text-mute2 mb-16 sm:mb-24">
+      <div class="flex items-center gap-3">
+        <span class="dot" aria-hidden="true"></span>
+        <span>installyouragent.com</span>
+      </div>
+      <div class="hidden sm:block">v.04 / accepting clients</div>
+      <div class="sm:hidden">accepting clients</div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end">
+      <div class="lg:col-span-8">
+        <div class="eyebrow mb-6">[ 01 — The pitch ]</div>
+        <h1 class="display text-[clamp(2.5rem,7vw,5.75rem)]">
+          We install your <span class="accent">AI&nbsp;agent</span>.<br/>
+          You run a team<br/>from your phone.
+        </h1>
+        <p id="subhead" class="mt-8 text-lg sm:text-xl text-mute2 max-w-[56ch]">
+          OpenClaw, local LLMs, custom swarms. Done in a weekend. Yours forever.
+        </p>
+
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href="#book" data-cal class="btn btn-primary">
+            Book a 15-min intake
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="#demo" data-loom class="btn btn-ghost">
+            <span aria-hidden="true">▶</span>
+            Watch the 3-min demo
+          </a>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-mute2">
+          <span>Flat fee.</span>
+          <span class="text-line2">/</span>
+          <span>No subscriptions.</span>
+          <span class="text-line2">/</span>
+          <span>No vendor lock-in.</span>
+        </div>
+      </div>
+
+      <!-- Terminal card -->
+      <div class="lg:col-span-4">
+        <div class="term">
+          <div class="bar">
+            <span>~/agent · session.log</span>
+            <span class="font-mono">●●●</span>
+          </div>
+          <div class="body">
+            <div><span class="dim">$</span> install --client <span class="ok">acme</span></div>
+            <div class="dim">  → provisioning vps&hellip; <span class="ok">ok</span></div>
+            <div class="dim">  → linking telegram&hellip; <span class="ok">ok</span></div>
+            <div class="dim">  → loading skills (7)&hellip; <span class="ok">ok</span></div>
+            <div class="dim">  → handoff loom recorded</div>
+            <div class="mt-2"><span class="dim">$</span> status</div>
+            <div class="ok">  agent online · 14 days</div>
+            <div class="mt-2"><span class="dim">$</span> <span class="caret"></span></div>
+          </div>
+        </div>
+        <div class="mt-3 text-xs font-mono text-mute2 flex justify-between">
+          <span>uptime 99.97%</span>
+          <span>last deploy: 2d ago</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── TAPE ─────────────── -->
+<div class="tape py-3" aria-hidden="true">
+  <div class="tape-track font-mono text-mute2 text-sm">
+    <!-- duplicate content for seamless loop -->
+    <span>● OPENCLAW</span><span class="text-line2">/</span>
+    <span>● LOCAL LLMs</span><span class="text-line2">/</span>
+    <span>● TELEGRAM · WHATSAPP · SIGNAL</span><span class="text-line2">/</span>
+    <span>● OPENROUTER</span><span class="text-line2">/</span>
+    <span>● CUSTOM SWARMS</span><span class="text-line2">/</span>
+    <span>● VPS or LOCAL</span><span class="text-line2">/</span>
+    <span>● FLAT FEE</span><span class="text-line2">/</span>
+    <span>● OPENCLAW</span><span class="text-line2">/</span>
+    <span>● LOCAL LLMs</span><span class="text-line2">/</span>
+    <span>● TELEGRAM · WHATSAPP · SIGNAL</span><span class="text-line2">/</span>
+    <span>● OPENROUTER</span><span class="text-line2">/</span>
+    <span>● CUSTOM SWARMS</span><span class="text-line2">/</span>
+    <span>● VPS or LOCAL</span><span class="text-line2">/</span>
+    <span>● FLAT FEE</span><span class="text-line2">/</span>
+  </div>
+</div>
+
+<!-- ─────────────── PROBLEM ─────────────── -->
+<section class="section-pad border-t hairline">
+  <div class="max-w-[1200px] mx-auto px-6 sm:px-8">
+    <div class="eyebrow mb-10">[ 02 — The problem ]</div>
+    <div class="grid sm:grid-cols-12 gap-y-6">
+      <p class="display sm:col-span-12 text-[clamp(2rem,5.5vw,4.25rem)]">
+        AI&nbsp;agents can run<br class="hidden sm:block"/> your business.
+      </p>
+      <p class="display sm:col-span-12 text-[clamp(2rem,5.5vw,4.25rem)] text-mute2">
+        Setting one up takes<br class="hidden sm:block"/> a weekend you don't have.
+      </p>
+      <p class="display sm:col-span-12 text-[clamp(2rem,5.5vw,4.25rem)]">
+        We do it <span class="accent">for you</span>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── WHAT YOU GET ─────────────── -->
+<section class="section-pad border-t hairline">
+  <div class="max-w-[1200px] mx-auto px-6 sm:px-8">
+    <div class="grid sm:grid-cols-12 gap-y-10 gap-x-12 mb-10 sm:mb-14">
+      <div class="sm:col-span-5">
+        <div class="eyebrow mb-6">[ 03 — What you get ]</div>
+        <h2 class="display-md text-[clamp(2rem,4.4vw,3.25rem)]">
+          A working agent.<br/>By Sunday night.
+        </h2>
+      </div>
+      <p class="sm:col-span-6 sm:col-start-7 text-mute2 text-lg max-w-[48ch] self-end">
+        Six things land in your inbox. No call sheets, no Slack-channel onboarding, no quarterly business review. You message your agent. It does the work.
+      </p>
+    </div>
+
+    <div role="list">
+      <div class="row" role="listitem">
+        <span class="num">01</span>
+        <div>
+          <div class="text-lg sm:text-xl font-medium tracking-tight">OpenClaw installed on your machine or VPS</div>
+        </div>
+        <span class="ico">~/bin/agent</span>
+      </div>
+      <div class="row" role="listitem">
+        <span class="num">02</span>
+        <div>
+          <div class="text-lg sm:text-xl font-medium tracking-tight">Connected to Telegram, WhatsApp, or your channel of choice</div>
+        </div>
+        <span class="ico">@yourbot</span>
+      </div>
+      <div class="row" role="listitem">
+        <span class="num">03</span>
+        <div>
+          <div class="text-lg sm:text-xl font-medium tracking-tight">Local LLM configured — or cloud-routed via OpenRouter</div>
+        </div>
+        <span class="ico">no API bills</span>
+      </div>
+      <div class="row" role="listitem">
+        <span class="num">04</span>
+        <div>
+          <div class="text-lg sm:text-xl font-medium tracking-tight">5–10 custom skills tuned to your business</div>
+        </div>
+        <span class="ico">./skills/*</span>
+      </div>
+      <div class="row" role="listitem">
+        <span class="num">05</span>
+        <div>
+          <div class="text-lg sm:text-xl font-medium tracking-tight">A 30-min walkthrough Loom — yours to keep</div>
+        </div>
+        <span class="ico">handoff.mp4</span>
+      </div>
+      <div class="row" role="listitem">
+        <span class="num">06</span>
+        <div>
+          <div class="text-lg sm:text-xl font-medium tracking-tight">Two weeks of tweaks, included</div>
+        </div>
+        <span class="ico">+14 days</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── PRICING ─────────────── -->
+<section class="section-pad border-t hairline">
+  <div class="max-w-[1200px] mx-auto px-6 sm:px-8">
+    <div class="grid sm:grid-cols-12 gap-y-10 gap-x-12 mb-10 sm:mb-14">
+      <div class="sm:col-span-5">
+        <div class="eyebrow mb-6">[ 04 — Pricing ]</div>
+        <h2 class="display-md text-[clamp(2rem,4.4vw,3.25rem)]">Three tiers.<br/>No retainer trap.</h2>
+      </div>
+      <p class="sm:col-span-6 sm:col-start-7 text-mute2 text-lg max-w-[48ch] self-end">
+        Pay once. Own the install. The Operator tier is the only one with optional ongoing work — and you can drop it any month.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-px bg-line">
+      <!-- Starter -->
+      <div class="price-card">
+        <div class="flex items-center justify-between">
+          <span class="tier">Starter</span>
+          <span class="font-mono text-xs text-mute2">tier_01</span>
+        </div>
+        <div>
+          <div class="price">$1,500</div>
+          <div class="font-mono text-xs text-mute mt-2">flat · one-time</div>
+        </div>
+        <ul>
+          <li>Single machine install</li>
+          <li>Standard skill library</li>
+          <li>Telegram channel</li>
+          <li>Cloud LLM routing</li>
+          <li>2 weeks of tweaks</li>
+        </ul>
+        <a href="#book" data-stripe="starter" class="btn btn-ghost mt-auto">Book this <span aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- Pro (featured) -->
+      <div class="price-card featured">
+        <div class="flex items-center justify-between">
+          <span class="tier" style="color:var(--accent)">Pro · most installs</span>
+          <span class="font-mono text-xs text-mute2">tier_02</span>
+        </div>
+        <div>
+          <div class="price">$3,000</div>
+          <div class="font-mono text-xs text-mute mt-2">flat · one-time</div>
+        </div>
+        <ul>
+          <li>Custom skill set (5–10)</li>
+          <li>Local LLM configured</li>
+          <li>Multi-channel (TG · WA · Signal)</li>
+          <li>Dedicated VPS provisioning</li>
+          <li>30-min handoff Loom</li>
+        </ul>
+        <a href="#book" data-stripe="pro" class="btn btn-primary mt-auto">Book this <span aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- Operator -->
+      <div class="price-card">
+        <div class="flex items-center justify-between">
+          <span class="tier">Operator</span>
+          <span class="font-mono text-xs text-mute2">tier_03</span>
+        </div>
+        <div>
+          <div class="price">$5,000<span class="text-mute2 text-2xl">+</span></div>
+          <div class="font-mono text-xs text-mute mt-2">flat · optional retainer</div>
+        </div>
+        <ul>
+          <li>Multi-device deployment</li>
+          <li>Custom swarm of agents</li>
+          <li>Priority response</li>
+          <li>Ongoing skill development</li>
+          <li>Cancel any month</li>
+        </ul>
+        <a href="#book" data-stripe="operator" class="btn btn-ghost mt-auto">Book this <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <p class="mt-6 font-mono text-xs text-mute">
+      // Stripe payment links open after the intake call. No card on file before then.
+    </p>
+  </div>
+</section>
+
+<!-- ─────────────── WHY US ─────────────── -->
+<section class="section-pad border-t hairline">
+  <div class="max-w-[1200px] mx-auto px-6 sm:px-8">
+    <div class="eyebrow mb-10">[ 05 — Why us ]</div>
+    <div class="grid sm:grid-cols-12 gap-y-8">
+      <p class="sm:col-span-10 display-md text-[clamp(1.75rem,4vw,3rem)]">
+        We've installed <span class="accent font-mono" id="installCount">42</span> agents.
+      </p>
+      <p class="sm:col-span-10 display-md text-[clamp(1.75rem,4vw,3rem)] text-mute2">
+        We use ours daily.
+      </p>
+      <p class="sm:col-span-10 display-md text-[clamp(1.75rem,4vw,3rem)]">
+        We'll send you ours on the call.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── FAQ ─────────────── -->
+<section class="section-pad border-t hairline">
+  <div class="max-w-[1200px] mx-auto px-6 sm:px-8">
+    <div class="grid sm:grid-cols-12 gap-y-10 gap-x-12 mb-8">
+      <div class="sm:col-span-5">
+        <div class="eyebrow mb-6">[ 06 — FAQ ]</div>
+        <h2 class="display-md text-[clamp(2rem,4.4vw,3.25rem)]">Five things<br/>people ask.</h2>
+      </div>
+      <p class="sm:col-span-6 sm:col-start-7 text-mute2 text-lg max-w-[48ch] self-end">
+        If yours isn't here, ask on the call. The intake is the FAQ.
+      </p>
+    </div>
+
+    <div class="sm:max-w-[820px]">
+      <details class="faq">
+        <summary>What's an AI agent? <span class="plus" aria-hidden="true">+</span></summary>
+        <div class="answer">A program that runs on your machine, takes instructions in plain English over a chat app, and does work — sends emails, queries your data, posts updates, books rooms. Like ChatGPT, except it can act on its own and live where you live.</div>
+      </details>
+      <details class="faq">
+        <summary>Why not just use ChatGPT? <span class="plus" aria-hidden="true">+</span></summary>
+        <div class="answer">ChatGPT answers in a tab. An agent works in the background. It has your tools, your data, your channels. No copy-paste. No leaving your messaging app. And nothing about it is rented from someone else's roadmap.</div>
+      </details>
+      <details class="faq">
+        <summary>Is this secure? <span class="plus" aria-hidden="true">+</span></summary>
+        <div class="answer">Local-first by default. Keys stay on your machine. If you go cloud-routed, traffic flows through OpenRouter — never through us. After handoff we have no access. You can rotate every credential the same day.</div>
+      </details>
+      <details class="faq">
+        <summary>What hardware do I need? <span class="plus" aria-hidden="true">+</span></summary>
+        <div class="answer">For local LLM: a Mac with 32GB+ unified memory, or a Linux box with a 12GB+ GPU. For cloud-routed: anything that runs Node. If you're not sure, send specs on the intake call — we'll tell you straight.</div>
+      </details>
+      <details class="faq">
+        <summary>What if it breaks? <span class="plus" aria-hidden="true">+</span></summary>
+        <div class="answer">Two weeks of tweaks are included on every tier. After that, message us — usually a 5-minute fix, no charge. Beyond that, the Operator tier exists for clients who want us on call.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── FOOTER CTA ─────────────── -->
+<section id="book" class="section-pad border-t hairline">
+  <div class="max-w-[1200px] mx-auto px-6 sm:px-8">
+    <div class="eyebrow mb-10">[ 07 — Ready ]</div>
+    <h2 class="display text-[clamp(3rem,9vw,8rem)]">
+      Ready?<br/>Book the&nbsp;<span class="accent">call</span>.
+    </h2>
+
+    <div class="mt-12 flex flex-wrap gap-3">
+      <a href="#intake-form" class="btn btn-primary">Book a 15-min intake <span aria-hidden="true">→</span></a>
+      <a href="mailto:hi@installyouragent.com" class="btn btn-ghost">hi@installyouragent.com</a>
+    </div>
+
+    <!-- Intake form — submissions go to Formspree -->
+    <!-- Sign up at formspree.io, create a form, and replace YOUR_FORM_ID below -->
+    <div id="intake-form" class="mt-14 border hairline-strong">
+      <div class="flex items-center justify-between px-4 py-3 border-b hairline font-mono text-xs text-mute2">
+        <span>// intake · 2 min</span>
+        <span>→ hi@installyouragent.com</span>
+      </div>
+      <div class="px-6 py-8 sm:px-10 sm:py-10 max-w-[640px]">
+        <div id="form-success">
+          <div class="text-lg mb-1">Request received.</div>
+          <div class="text-mute2 font-sans text-sm mt-2">We'll reply within one business day to schedule your 15-min intake call.</div>
+        </div>
+        <form
+          id="intake"
+          action="https://formspree.io/f/xdaybqva"
+          method="POST"
+          class="flex flex-col gap-6"
+        >
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" type="text" name="name" placeholder="Your name" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-tier">Tier you're eyeing</label>
+            <select id="f-tier" name="tier">
+              <option value="">Not sure yet</option>
+              <option value="starter">Starter — $1,500</option>
+              <option value="pro">Pro — $3,000</option>
+              <option value="operator">Operator — $5,000+</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="f-message">What do you need the agent to do?</label>
+            <textarea id="f-message" name="message" placeholder="Give us one sentence. E.g. 'Handle incoming leads on Telegram and push them into my CRM.'"></textarea>
+          </div>
+
+          <input type="hidden" name="_subject" value="New intake request — installyouragent.com" />
+
+          <div>
+            <button type="submit" class="btn btn-primary">
+              Send intake request <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Loom placeholder -->
+    <div id="demo" class="mt-6 border hairline-strong">
+      <div class="flex items-center justify-between px-4 py-3 border-b hairline font-mono text-xs text-mute2">
+        <span>// loom.com/share/&lt;3-min-demo&gt;</span>
+        <span>placeholder</span>
+      </div>
+      <div class="aspect-video grid place-items-center text-center px-6">
+        <div>
+          <div class="font-mono text-xs text-mute2 mb-3">LOOM EMBED</div>
+          <div class="display-md text-2xl sm:text-3xl">▶ The 3-min demo</div>
+          <a href="#" data-loom class="btn btn-ghost mt-6">Play <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer line -->
+    <div class="mt-16 pt-8 border-t hairline flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-mute2">
+      <div class="flex items-center gap-3">
+        <span class="dot" aria-hidden="true"></span>
+        <span>installyouragent.com</span>
+      </div>
+      <div>© <span id="year"></span> · built by an operator, for operators</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── TWEAKS ─────────────── -->
+<aside id="tweaks" aria-label="Tweaks panel">
+  <header>
+    <span>// Tweaks</span>
+    <button class="close" id="twkClose" aria-label="Close tweaks">×</button>
+  </header>
+  <div class="group">
+    <label>Accent</label>
+    <div class="swatches" role="radiogroup" aria-label="Accent color">
+      <button class="sw" data-accent="green"  style="background:#6dff7a" title="Electric green"></button>
+      <button class="sw" data-accent="cyan"   style="background:#5ee7ff" title="Cyan"></button>
+      <button class="sw" data-accent="amber"  style="background:#ffb547" title="Amber"></button>
+      <button class="sw" data-accent="paper"  style="background:#ededed" title="Paper (no accent)"></button>
+    </div>
+  </div>
+  <div class="group">
+    <label>Density</label>
+    <div class="seg" role="radiogroup" aria-label="Density">
+      <button data-density="compact">Compact</button>
+      <button data-density="regular">Regular</button>
+      <button data-density="comfy">Comfy</button>
+    </div>
+  </div>
+  <div class="group">
+    <label>Hero headline</label>
+    <div class="seg" role="radiogroup" aria-label="Hero variant">
+      <button data-hero="default">Default</button>
+      <button data-hero="alt">Alt</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+  // ───── Defaults (host-rewritable JSON between markers) ─────
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "accent": "green",
+    "density": "regular",
+    "hero": "default",
+    "installCount": 42
+  }/*EDITMODE-END*/;
+
+  // ───── Apply ─────
+  const ACCENTS = {
+    green: { c: '#6dff7a', ink: '#06170a' },
+    cyan:  { c: '#5ee7ff', ink: '#04181c' },
+    amber: { c: '#ffb547', ink: '#1a1003' },
+    paper: { c: '#ededed', ink: '#0a0a0a' },
+  };
+  const HEROS = {
+    default: {
+      h: 'We install your <span class="accent">AI&nbsp;agent</span>.<br/>You run a team<br/>from your phone.',
+      s: 'OpenClaw, local LLMs, custom swarms. Done in a weekend. Yours forever.',
+    },
+    alt: {
+      h: 'You message it.<br/>It does the&nbsp;<span class="accent">work</span>.',
+      s: 'A personal agent, installed at your door by our team. Local. Private. Switched on by Sunday.',
+    },
+  };
+
+  const state = { ...TWEAK_DEFAULTS };
+
+  function applyState(){
+    // accent
+    const a = ACCENTS[state.accent] || ACCENTS.green;
+    document.documentElement.style.setProperty('--accent', a.c);
+    document.documentElement.style.setProperty('--accent-ink', a.ink);
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0a0a0a');
+    document.querySelectorAll('#tweaks .sw').forEach(b => b.setAttribute('aria-pressed', b.dataset.accent === state.accent));
+
+    // density
+    document.body.dataset.density = state.density;
+    document.querySelectorAll('#tweaks .seg button[data-density]').forEach(b => b.setAttribute('aria-pressed', b.dataset.density === state.density));
+
+    // hero variant
+    const hero = HEROS[state.hero] || HEROS.default;
+    const h1 = document.querySelector('h1.display');
+    const sub = document.getElementById('subhead');
+    if (h1) h1.innerHTML = hero.h;
+    if (sub) sub.textContent = hero.s;
+    document.querySelectorAll('#tweaks .seg button[data-hero]').forEach(b => b.setAttribute('aria-pressed', b.dataset.hero === state.hero));
+
+    // misc
+    const ic = document.getElementById('installCount');
+    if (ic) ic.textContent = state.installCount;
+  }
+
+  function setKey(k, v){
+    state[k] = v;
+    applyState();
+    try {
+      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v }}, '*');
+    } catch(e){}
+  }
+
+  // ───── Wire controls ─────
+  document.querySelectorAll('#tweaks .sw').forEach(b => {
+    b.addEventListener('click', () => setKey('accent', b.dataset.accent));
+  });
+  document.querySelectorAll('#tweaks .seg button[data-density]').forEach(b => {
+    b.addEventListener('click', () => setKey('density', b.dataset.density));
+  });
+  document.querySelectorAll('#tweaks .seg button[data-hero]').forEach(b => {
+    b.addEventListener('click', () => setKey('hero', b.dataset.hero));
+  });
+
+  // ───── Edit-mode protocol (LISTENER FIRST, then announce) ─────
+  const panel = document.getElementById('tweaks');
+  const closeBtn = document.getElementById('twkClose');
+  function openPanel(){ panel.dataset.open = 'true' }
+  function closePanel(){
+    panel.dataset.open = 'false';
+    try { window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); } catch(e){}
+  }
+  window.addEventListener('message', (e) => {
+    const t = e.data && e.data.type;
+    if (t === '__activate_edit_mode')   openPanel();
+    if (t === '__deactivate_edit_mode') closePanel();
+  });
+  closeBtn.addEventListener('click', closePanel);
+  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e){}
+
+  // ───── FAQ accordion: only one open at a time ─────
+  document.querySelectorAll('details.faq').forEach(d => {
+    d.addEventListener('toggle', () => {
+      if (d.open) {
+        document.querySelectorAll('details.faq').forEach(o => { if (o !== d) o.open = false });
+      }
+    });
+  });
+
+  // ───── Year ─────
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ───── Smooth scroll for #book ─────
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const el = document.querySelector(id);
+        if (el) { e.preventDefault(); el.scrollIntoView({ behavior:'smooth', block:'start' }); }
+      }
+    });
+  });
+
+  // ───── Intake form: show success state on Formspree redirect ─────
+  const intakeForm = document.getElementById('intake');
+  if (intakeForm) {
+    intakeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(intakeForm);
+      try {
+        const res = await fetch(intakeForm.action, {
+          method: 'POST', body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok) {
+          intakeForm.style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+        } else {
+          alert('Something went wrong. Email us directly at hi@installyouragent.com');
+        }
+      } catch {
+        alert('Network error. Email us at hi@installyouragent.com');
+      }
+    });
+  }
+
+  // ───── Init ─────
+  applyState();
+</script>
+</body>
+</html>
